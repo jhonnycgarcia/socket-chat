@@ -13,7 +13,10 @@ var usuario = {
 }
 
 socket.on('connect', function() {
-    socket.emit('entrarChat', usuario, function(resp) { console.log('Usuarios conectados', resp); });
+    socket.emit('entrarChat', usuario, function(resp) {
+        // console.log('Usuarios conectados', resp); 
+        renderizarUsuarios(resp);
+    });
 });
 
 socket.on('disconnect', function() { console.log('Perdimos conexión con el servidor'); });
@@ -23,10 +26,13 @@ socket.on('disconnect', function() { console.log('Perdimos conexión con el serv
 // socket.emit('crearMensaje', { usuario: 'Fernando', mensaje: 'Hola Mundo' }, function(resp) { console.log('respuesta server: ', resp); });
 
 // Escuchar información
-socket.on('crearMensaje', function(mensaje) { console.log('Servidor:', mensaje); });
+socket.on('crearMensaje', function(mensaje) {
+    renderizarMensajes(mensaje, false);
+    scrollBottom(); /* console.log('Servidor:', mensaje); */
+});
 
 // Cuando un usuario entra o sale del chat
-socket.on('listaPersona', function(personas) { console.log(personas); });
+socket.on('listaPersona', function(personas) { renderizarUsuarios(personas); });
 
 // Mensaje privado
 socket.on('mensajePrivado', function(mensaje) { console.log('Mensaje privado: ', mensaje); });

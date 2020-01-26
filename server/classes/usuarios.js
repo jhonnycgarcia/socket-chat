@@ -25,8 +25,10 @@ class Usuarios {
 
     borrarPersona(id) { // Borrar persona
         let personaBorrada = this.getPersona(id); // Capturar persona a borrar
-        this.personas = this.personas.filter(persona => persona.id !== id); // borrar persona
-        return personaBorrada;
+        if (personaBorrada !== undefined) {
+            this.personas = this.personas.filter(persona => persona.id !== id); // borrar persona
+            return personaBorrada;
+        } else { return null; }
     }
 }
 
